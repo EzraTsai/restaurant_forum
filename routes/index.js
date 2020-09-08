@@ -22,6 +22,8 @@ module.exports = (app, passport) => {
 
     app.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants')) // 連到 /admin 頁面就轉到 /admin/restaurants
     app.get('/admin/restaurants', authenticatedAdmin, adminController.getRestaurants) // 在 /admin/restaurants 底下則交給 adminController.getRestaurants 處理
+    app.get('/admin/restaurants/create', authenticatedAdmin, adminController.createRestaurant)
+    app.post('/admin/restaurants', authenticatedAdmin, adminController.postRestaurant)
 
     app.get('/signup', userController.signUpPage)
     app.post('/signup', userController.signUp)
