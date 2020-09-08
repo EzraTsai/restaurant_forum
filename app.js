@@ -7,6 +7,10 @@ const session = require('express-session')
 const passport = require('./config/passport')
 const methodOverride = require('method-override')
 const Port = process.env.PORT || 3000
+if(process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
+
 const app = express()
 
 app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
