@@ -13,7 +13,11 @@ if(process.env.NODE_ENV !== 'production') {
 
 const app = express()
 
-app.engine('hbs', exphbs({ defaultLayout: 'main', extname: '.hbs' }))
+app.engine('hbs', exphbs({
+    defaultLayout: 'main',
+    helpers: require('./config/handlebars.helpers'),
+    extname: '.hbs'
+}))
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.urlencoded({ extended: true }))
