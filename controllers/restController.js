@@ -18,7 +18,7 @@ let restController = {
             categoryId = Number(req.query.categoryId)
             whereQuery['CategoryId'] = categoryId
         }
-        Restaurant.findAndCountAll({ include: Category, where: whereQuery, limit: pageLimit }).then(result => {
+        Restaurant.findAndCountAll({ include: Category, where: whereQuery, offset: offset, limit: pageLimit }).then(result => {
             let page = Number(req.query.page) || 1
             let pages = Math.ceil(result.count / pageLimit)
             let totalPage = Array.from({ length: pages }).map((item, index) => index + 1)
