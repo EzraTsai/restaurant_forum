@@ -6,12 +6,28 @@
     <div class="col-md-8">
         <p>{{user.name}}</p>
         <p>{{user.email}}</p>
+        <p>{{user.Comments.length}}間已評論餐廳</p>
         <a href="/users/{{user.id}}/edit" class="btn btn-primary" role="button" aria-pressed="true">Edit</a>
     </div>
     <hr>
 </div>
-
 <hr>
+<div class="card">
+    <div class="card-header">
+        {{user.Comments.length}}間已評論餐廳
+    </div>
+    <div class="card-body row">
+        {{#each user.Comments}}
+        <div class="col-2">
+            {{!-- <img class="card-img-top" src="{{this.Restaurant.image}}" alt="Card image cap"> --}}
+            <a href="/restaurants/{{this.Restaurant.id}}">
+                <img src="{{this.Restaurant.image}}" alt="" class="mx-1"
+                    style="width:100px; height:100px; object-fit:cover">
+            </a>
+        </div>
+        {{/each}}
+    </div>
+</div>
 
 <br />
 <br />
