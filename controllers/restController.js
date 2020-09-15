@@ -87,6 +87,10 @@ let restController = {
                 { model: Comment, include: [User] }
             ]
         }).then(restaurant => {
+            if (restaurant) {
+                restaurant.viewCounts += 1
+            restaurant.save()
+            }
             return res.render('dashboard', {
                 restaurant: restaurant.toJSON()
             })
