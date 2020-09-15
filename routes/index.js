@@ -26,7 +26,8 @@ module.exports = (app, passport) => {
     app.get('/restaurants', authenticated, restController.getRestaurants) //在 /restaurants 底下則交給 restController.getRestaurants 來處理
     app.get('/restaurants/feeds', authenticated, restController.getFeeds)
     app.get('/restaurants/:id', authenticated, restController.getRestaurant)
-    
+    app.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
+
     app.post('/comments', authenticated, commentController.postComment)
     app.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 
