@@ -117,7 +117,7 @@ const adminService = {
             .then((restaurant) => {
                 restaurant.destroy()
                     .then((restaurant) => {
-                        callbacks({ stauts: 'success', message: '' })
+                        callback({ status: 'success', message: '' })
                     })
             })
     }
