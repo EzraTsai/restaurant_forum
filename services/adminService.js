@@ -1,3 +1,6 @@
+const imgur = require('imgur-node-api')
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
+
 const db = require('../models')
 const Restaurant = db.Restaurant
 const Category = db.Category
@@ -21,6 +24,49 @@ const adminService = {
         }).then(restaurant => {
             callback({ restaurant: restaurant })
         })
+    },
+    postRestaurant: (req, res, callback) => {
+        try {
+            if (!req.body.name) {
+                return callback({ status: 'error', message: "name didn't exist" })
+            }
+
+            const { file } = req
+            if (file) {
+                imgur.setClientID(IMGUR_CLIENT_ID);
+                imgur.upload(file.path, (err, img) => {
+                    return Restaurant.create({
+                        name: req.body.name,
+                        tel: req.body.tel,
+                        address: req.body.address,
+                        opening_hours: req.body.opening_hours,
+                        description: req.body.description,
+                        image: file ? img.data.link : null,
+                        CategoryId: req.body.categoryId
+                    }).then((restaurant) => {
+                        return callback({ status: 'success', message: 'restaurant was successfully created' })
+                    })
+                })
+            }
+            else {
+                return Restaurant.create({
+                    name: req.body.name,
+                    tel: req.body.tel,
+                    address: req.body.address,
+                    opening_hours: req.body.opening_hours,
+                    description: req.body.description,
+                    image: null,
+                    CategoryId: req.body.categoryId
+                }).then((restaurant) => {
+                    return callback({ status: 'success', message: 'restaurant was successfully created' })
+                })
+            }
+        } catch (err) {
+            // 印出錯誤訊息
+            console.log(err)
+            // 讓程式遇到錯誤的時候，導回其他頁面
+            return res.redirect('/admin/restaurants')
+        }
     },
     deleteRestaurant: (req, res, callback) => {
         return Restaurant.findByPk(req.params.id)
